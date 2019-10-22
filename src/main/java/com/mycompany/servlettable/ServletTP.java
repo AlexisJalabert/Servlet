@@ -36,7 +36,7 @@ public class ServletTP extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			try {	// Trouver la valeur du paramètre HTTP customerID
-				String val = request.getParameter("customerID");
+				String val = request.getParameter("CustomerID");
 				if (val == null) {
 					throw new Exception("La paramètre customerID n'a pas été transmis");
 				}
