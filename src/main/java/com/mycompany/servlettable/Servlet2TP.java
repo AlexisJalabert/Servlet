@@ -50,17 +50,7 @@ public class Servlet2TP extends HttpServlet {
 					throw new Exception("Client inconnu");
 				}
 				// Afficher les propriétés du client			
-				out.println("<table border=\"double 1px\">");
-                                out.println("<tr>");
-                                out.println("<td>Id</td>");
-                                out.println("<td>Name</td>");
-                                out.println("<td>Address</td>");
-                                for(int i = 0; i < customer.size() ; i++) {
-                                    out.printf("<tr><td>%s</td>", customer.get(i).getCustomerId());
-                                    out.printf("<td>%s</td>",customer.get(i).getName());
-                                    out.printf("<td>%s</td></tr>", customer.get(i).getAddressLine1());
-                                }
-                                out.println("</table>");
+				
                                 
 			} catch (Exception e) {
 				out.printf("Erreur : %s", e.getMessage());
