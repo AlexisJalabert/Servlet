@@ -2,6 +2,7 @@ package com.mycompany.servlettable;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -36,23 +37,31 @@ public class ServletTP extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			try {	// Trouver la valeur du paramètre HTTP customerID
-				String val = request.getParameter("CustomerID");
+				String val = request.getParameter("state");
 				if (val == null) {
-					throw new Exception("La paramètre customerID n'a pas été transmis");
+					throw new Exception("La paramètre n'a pas été transmis");
 				}
 				// on doit convertir cette valeur en entier (attention aux exceptions !)
-				int customerID = Integer.valueOf(val);
+				String state = val;
 
 				DAO dao = new DAO(DataSourceFactory.getDataSource());
-				CustomerEntity customer = dao.findCustomer(customerID);
+				List<CustomerEntity> customer = dao.customersInState(state);
 				if (customer == null) {
 					throw new Exception("Client inconnu");
 				}
 				// Afficher les propriétés du client			
-				out.printf("Customer n° %d <br> name: %s <br> address: %s",
-					customerID,
-					customer.getName(),
-					customer.getAddressLine1());
+				out.println("<table border=\"double 1px\">");
+                                out.println("<tr>");
+                                out.println("<td>Id</td>");
+                                out.println("<td>Name</td>");
+                                out.println("<td>Address</td>");
+                                for(int i = 0; i < customer.size() ; i++) {
+                                    out.printf("<tr><td>%s</td>", customer.get(i).getCustomerId());
+                                    out.printf("<td>%s</td>",customer.get(i).getName());
+                                    out.printf("<td>%s</td></tr>", customer.get(i).getAddressLine1());
+                                }
+                                out.println("</table>");
+                                
 			} catch (Exception e) {
 				out.printf("Erreur : %s", e.getMessage());
 			}
